@@ -1,0 +1,20 @@
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+venv/
+
+# Local secrets
+.env
+.env.*
+!.env.example
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+
+# Generated data and temporary files
+data/processed/*.csv
+*.log
+.DS_Store
