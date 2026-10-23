@@ -11,10 +11,14 @@ venv/
 .env.*
 !.env.example
 
-# Notebook checkpoints
+# Jupyter checkpoints
 .ipynb_checkpoints/
 
-# Generated data and temporary files
+# Original and processed datasets
+data/raw/*.csv
 data/processed/*.csv
+
+# Machine-specific files
 *.log
 .DS_Store
+Thumbs.db

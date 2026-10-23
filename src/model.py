@@ -1,49 +1,126 @@
-Clustering model module for A4 — Depot Placement.
+"""
+A4 — Geospatial Demand Clustering for Micro-Depot Placement.
 
-The module will contain the clustering methods used to identify
-geographical demand groups from Doorstep booking locations.
+Clustering algorithms for Doorstep booking locations.
+Team 6 | AI & ML Thematic Assessment
+
+K-Means uses projected coordinates in kilometres so that
+Euclidean distances are approximately meaningful locally.
+DBSCAN uses haversine distances directly on Earth coordinates.
 """
 
+import numpy as np
+from sklearn.cluster import KMeans, DBSCAN
 
-def run_kmeans(data, n_clusters):
+
+EARTH_RADIUS_KM = 6371.0088
+
+
+def project_coordinates(data):
     """
-    Run K-Means clustering on geographical demand data.
+    Convert latitude/longitude into approximate local kilometre coordinates.
 
-    Parameters
-    ----------
-    data : array-like
-        Booking location data used for clustering.
-    n_clusters : int
-        Number of clusters to create.
-
-    Returns
-    -------
-    object
-        Clustering result.
-
-    Implementation will be added during the model development stage.
+    Suitable for a city-scale clustering prototype, not road distances.
     """
-    raise NotImplementedError("K-Means implementation pending.")
+    coordinates = np.asarray(data, dtype=float)
+
+    if coordinates.ndim != 2 or coordinates.shape[1] != 2:
+        raise ValueError("Data must have two columns: latitude and longitude.")
+
+    if not np.isfinite(coordinates).all():
+        raise ValueError("Coordinates contain missing or invalid numbers.")
+
+    latitude = np.radians(coordinates[:, 0])
+    longitude = np.radians(coordinates[:, 1])
+
+    reference_lat = np.mean(latitude)
+    reference_lng = np.mean(longitude)
+
+    x = EARTH_RADIUS_KM * (longitude - reference_lng) * np.cos(reference_lat)
+    y = EARTH_RADIUS_KM * (latitude - reference_lat)
+
+    return np.column_stack((x, y)), reference_lat, reference_lng
 
 
-def run_dbscan(data, eps, min_samples):
+def unproject_coordinates(centres, reference_lat, reference_lng):
+    """Convert projected K-Means centres back to latitude and longitude."""
+    x = centres[:, 0]
+    y = centres[:, 1]
+
+    latitude = np.degrees(y / EARTH_RADIUS_KM + reference_lat)
+    longitude = np.degrees(
+        x / (EARTH_RADIUS_KM * np.cos(reference_lat)) + reference_lng
+    )
+
+    return np.column_stack((latitude, longitude))
+
+
+def run_kmeans(data, n_clusters=3, random_state=42):
     """
-    Run DBSCAN clustering on geographical demand data.
+    Apply K-Means to customer booking coordinates.
 
-    Parameters
-    ----------
-    data : array-like
-        Booking location data used for clustering.
-    eps : float
-        Neighbourhood distance parameter.
-    min_samples : int
-        Minimum number of nearby points required to form a dense region.
-
-    Returns
-    -------
-    object
-        Clustering result.
-
-    Implementation will be added during the model development stage.
+    Returns a dictionary containing labels, depot candidates
+    and the fitted model.
     """
-    raise NotImplementedError("DBSCAN implementation pending.")
+    coordinates = np.asarray(data, dtype=float)
+
+    if not 1 <= n_clusters <= len(coordinates):
+        raise ValueError("Invalid number of clusters.")
+
+    projected, ref_lat, ref_lng = project_coordinates(coordinates)
+
+    model = KMeans(
+        n_clusters=n_clusters,
+        random_state=random_state,
+        n_init=10
+    )
+
+    labels = model.fit_predict(projected)
+
+    centres = unproject_coordinates(
+        model.cluster_centers_, ref_lat, ref_lng
+    )
+
+    return {
+        "labels": labels,
+        "centres": centres,
+        "model": model,
+        "inertia": model.inertia_
+    }
+
+
+def run_dbscan(data, eps=1.0, min_samples=10):
+    """
+    Apply DBSCAN using geographical distances.
+
+    eps is expressed in kilometres.
+    Label -1 represents noise or isolated points.
+    """
+    coordinates = np.asarray(data, dtype=float)
+
+    if coordinates.ndim != 2 or coordinates.shape[1] != 2:
+        raise ValueError("Data must have latitude and longitude columns.")
+
+    if not np.isfinite(coordinates).all():
+        raise ValueError("Coordinates contain invalid values.")
+
+    if eps <= 0 or min_samples < 1:
+        raise ValueError("eps must be positive and min_samples >= 1.")
+
+    radians = np.radians(coordinates)
+
+    model = DBSCAN(
+        eps=eps / EARTH_RADIUS_KM,
+        min_samples=min_samples,
+        metric="haversine",
+        algorithm="ball_tree"
+    )
+
+    labels = model.fit_predict(radians)
+
+    return {
+        "labels": labels,
+        "model": model,
+        "n_clusters": len(set(labels) - {-1}),
+        "noise_points": int(np.sum(labels == -1))
+    }
