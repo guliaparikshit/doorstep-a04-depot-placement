@@ -1,1 +1,57 @@
 run_id,date,who,what_changed,main_metric,value,seed,notes
+kmeans_k1_seed42,2026-10-24,Team 6,K-Means K=1,mean_nearest_centre_km,6.197235,42,Completed-booking dataset; straight-line Haversine distance; candidate centres only
+kmeans_k2_seed42,2026-10-24,Team 6,K-Means K=2,mean_nearest_centre_km,4.138153,42,Completed-booking dataset; straight-line Haversine distance; candidate centres only
+kmeans_k3_seed42,2026-10-24,Team 6,K-Means K=3,mean_nearest_centre_km,3.240042,42,Completed-booking dataset; straight-line Haversine distance; candidate centres only
+kmeans_k4_seed42,2026-10-24,Team 6,K-Means K=4,mean_nearest_centre_km,2.533792,42,Completed-booking dataset; straight-line Haversine distance; candidate centres only
+kmeans_k5_seed42,2026-10-24,Team 6,K-Means K=5,mean_nearest_centre_km,2.028378,42,Completed-booking dataset; straight-line Haversine distance; candidate centres only
+kmeans_k6_seed42,2026-10-24,Team 6,K-Means K=6,mean_nearest_centre_km,1.784338,42,Completed-booking dataset; straight-line Haversine distance; candidate centres only
+kmeans_k7_seed42,2026-10-24,Team 6,K-Means K=7,mean_nearest_centre_km,1.621147,42,Completed-booking dataset; straight-line Haversine distance; candidate centres only
+kmeans_k8_seed42,2026-10-24,Team 6,K-Means K=8,mean_nearest_centre_km,1.485438,42,Completed-booking dataset; straight-line Haversine distance; candidate centres only
+kmeans_k9_seed42,2026-10-24,Team 6,K-Means K=9,mean_nearest_centre_km,1.385066,42,Completed-booking dataset; straight-line Haversine distance; candidate centres only
+kmeans_k10_seed42,2026-10-24,Team 6,K-Means K=10,mean_nearest_centre_km,1.309265,42,Completed-booking dataset; straight-line Haversine distance; candidate centres only
+dbscan_eps0.3_min30_sample6000_seed42,2026-10-24,Team 6,DBSCAN eps=0.3 km; min_samples=30,n_clusters,17.0,42,Sample=6000; noise=60.58%; exploratory DBSCAN parameter comparison
+dbscan_eps0.5_min30_sample6000_seed42,2026-10-24,Team 6,DBSCAN eps=0.5 km; min_samples=30,n_clusters,13.0,42,Sample=6000; noise=23.43%; exploratory DBSCAN parameter comparison
+dbscan_eps0.8_min30_sample6000_seed42,2026-10-24,Team 6,DBSCAN eps=0.8 km; min_samples=30,n_clusters,4.0,42,Sample=6000; noise=5.15%; exploratory DBSCAN parameter comparison
+dbscan_eps1.2_min30_sample6000_seed42,2026-10-24,Team 6,DBSCAN eps=1.2 km; min_samples=30,n_clusters,2.0,42,Sample=6000; noise=0.50%; exploratory DBSCAN parameter comparison
+kmeans_reliability_k3_seed42,2026-10-24,Team 6,K-Means K=3; seed=42,mean_nearest_centre_km,3.240042,42,"10-seed reliability experiment; 39,302 completed bookings; straight-line distance"
+kmeans_reliability_k3_seed43,2026-10-24,Team 6,K-Means K=3; seed=43,mean_nearest_centre_km,3.240042,43,"10-seed reliability experiment; 39,302 completed bookings; straight-line distance"
+kmeans_reliability_k3_seed44,2026-10-24,Team 6,K-Means K=3; seed=44,mean_nearest_centre_km,3.240042,44,"10-seed reliability experiment; 39,302 completed bookings; straight-line distance"
+kmeans_reliability_k3_seed45,2026-10-24,Team 6,K-Means K=3; seed=45,mean_nearest_centre_km,3.240042,45,"10-seed reliability experiment; 39,302 completed bookings; straight-line distance"
+kmeans_reliability_k3_seed46,2026-10-24,Team 6,K-Means K=3; seed=46,mean_nearest_centre_km,3.240042,46,"10-seed reliability experiment; 39,302 completed bookings; straight-line distance"
+kmeans_reliability_k3_seed47,2026-10-24,Team 6,K-Means K=3; seed=47,mean_nearest_centre_km,3.240042,47,"10-seed reliability experiment; 39,302 completed bookings; straight-line distance"
+kmeans_reliability_k3_seed48,2026-10-24,Team 6,K-Means K=3; seed=48,mean_nearest_centre_km,3.240042,48,"10-seed reliability experiment; 39,302 completed bookings; straight-line distance"
+kmeans_reliability_k3_seed49,2026-10-24,Team 6,K-Means K=3; seed=49,mean_nearest_centre_km,3.240042,49,"10-seed reliability experiment; 39,302 completed bookings; straight-line distance"
+kmeans_reliability_k3_seed50,2026-10-24,Team 6,K-Means K=3; seed=50,mean_nearest_centre_km,3.240042,50,"10-seed reliability experiment; 39,302 completed bookings; straight-line distance"
+kmeans_reliability_k3_seed51,2026-10-24,Team 6,K-Means K=3; seed=51,mean_nearest_centre_km,3.240042,51,"10-seed reliability experiment; 39,302 completed bookings; straight-line distance"
+kmeans_reliability_k5_seed42,2026-10-24,Team 6,K-Means K=5; seed=42,mean_nearest_centre_km,2.028378,42,"10-seed reliability experiment; 39,302 completed bookings; straight-line distance"
+kmeans_reliability_k5_seed43,2026-10-24,Team 6,K-Means K=5; seed=43,mean_nearest_centre_km,2.028378,43,"10-seed reliability experiment; 39,302 completed bookings; straight-line distance"
+kmeans_reliability_k5_seed44,2026-10-24,Team 6,K-Means K=5; seed=44,mean_nearest_centre_km,2.028378,44,"10-seed reliability experiment; 39,302 completed bookings; straight-line distance"
+kmeans_reliability_k5_seed45,2026-10-24,Team 6,K-Means K=5; seed=45,mean_nearest_centre_km,2.028378,45,"10-seed reliability experiment; 39,302 completed bookings; straight-line distance"
+kmeans_reliability_k5_seed46,2026-10-24,Team 6,K-Means K=5; seed=46,mean_nearest_centre_km,2.028373,46,"10-seed reliability experiment; 39,302 completed bookings; straight-line distance"
+kmeans_reliability_k5_seed47,2026-10-24,Team 6,K-Means K=5; seed=47,mean_nearest_centre_km,2.02841,47,"10-seed reliability experiment; 39,302 completed bookings; straight-line distance"
+kmeans_reliability_k5_seed48,2026-10-24,Team 6,K-Means K=5; seed=48,mean_nearest_centre_km,2.028378,48,"10-seed reliability experiment; 39,302 completed bookings; straight-line distance"
+kmeans_reliability_k5_seed49,2026-10-24,Team 6,K-Means K=5; seed=49,mean_nearest_centre_km,2.028378,49,"10-seed reliability experiment; 39,302 completed bookings; straight-line distance"
+kmeans_reliability_k5_seed50,2026-10-24,Team 6,K-Means K=5; seed=50,mean_nearest_centre_km,2.028378,50,"10-seed reliability experiment; 39,302 completed bookings; straight-line distance"
+kmeans_reliability_k5_seed51,2026-10-24,Team 6,K-Means K=5; seed=51,mean_nearest_centre_km,2.02841,51,"10-seed reliability experiment; 39,302 completed bookings; straight-line distance"
+kmeans_reliability_k6_seed42,2026-10-24,Team 6,K-Means K=6; seed=42,mean_nearest_centre_km,1.784338,42,"10-seed reliability experiment; 39,302 completed bookings; straight-line distance"
+kmeans_reliability_k6_seed43,2026-10-24,Team 6,K-Means K=6; seed=43,mean_nearest_centre_km,1.784201,43,"10-seed reliability experiment; 39,302 completed bookings; straight-line distance"
+kmeans_reliability_k6_seed44,2026-10-24,Team 6,K-Means K=6; seed=44,mean_nearest_centre_km,1.784201,44,"10-seed reliability experiment; 39,302 completed bookings; straight-line distance"
+kmeans_reliability_k6_seed45,2026-10-24,Team 6,K-Means K=6; seed=45,mean_nearest_centre_km,1.784252,45,"10-seed reliability experiment; 39,302 completed bookings; straight-line distance"
+kmeans_reliability_k6_seed46,2026-10-24,Team 6,K-Means K=6; seed=46,mean_nearest_centre_km,1.784201,46,"10-seed reliability experiment; 39,302 completed bookings; straight-line distance"
+kmeans_reliability_k6_seed47,2026-10-24,Team 6,K-Means K=6; seed=47,mean_nearest_centre_km,1.784223,47,"10-seed reliability experiment; 39,302 completed bookings; straight-line distance"
+kmeans_reliability_k6_seed48,2026-10-24,Team 6,K-Means K=6; seed=48,mean_nearest_centre_km,1.784201,48,"10-seed reliability experiment; 39,302 completed bookings; straight-line distance"
+kmeans_reliability_k6_seed49,2026-10-24,Team 6,K-Means K=6; seed=49,mean_nearest_centre_km,1.784162,49,"10-seed reliability experiment; 39,302 completed bookings; straight-line distance"
+kmeans_reliability_k6_seed50,2026-10-24,Team 6,K-Means K=6; seed=50,mean_nearest_centre_km,1.784338,50,"10-seed reliability experiment; 39,302 completed bookings; straight-line distance"
+kmeans_reliability_k6_seed51,2026-10-24,Team 6,K-Means K=6; seed=51,mean_nearest_centre_km,1.784201,51,"10-seed reliability experiment; 39,302 completed bookings; straight-line distance"
+kmeans_reliability_k8_seed42,2026-10-24,Team 6,K-Means K=8; seed=42,mean_nearest_centre_km,1.485438,42,"10-seed reliability experiment; 39,302 completed bookings; straight-line distance"
+kmeans_reliability_k8_seed43,2026-10-24,Team 6,K-Means K=8; seed=43,mean_nearest_centre_km,1.485291,43,"10-seed reliability experiment; 39,302 completed bookings; straight-line distance"
+kmeans_reliability_k8_seed44,2026-10-24,Team 6,K-Means K=8; seed=44,mean_nearest_centre_km,1.485429,44,"10-seed reliability experiment; 39,302 completed bookings; straight-line distance"
+kmeans_reliability_k8_seed45,2026-10-24,Team 6,K-Means K=8; seed=45,mean_nearest_centre_km,1.485429,45,"10-seed reliability experiment; 39,302 completed bookings; straight-line distance"
+kmeans_reliability_k8_seed46,2026-10-24,Team 6,K-Means K=8; seed=46,mean_nearest_centre_km,1.485429,46,"10-seed reliability experiment; 39,302 completed bookings; straight-line distance"
+kmeans_reliability_k8_seed47,2026-10-24,Team 6,K-Means K=8; seed=47,mean_nearest_centre_km,1.485438,47,"10-seed reliability experiment; 39,302 completed bookings; straight-line distance"
+kmeans_reliability_k8_seed48,2026-10-24,Team 6,K-Means K=8; seed=48,mean_nearest_centre_km,1.485429,48,"10-seed reliability experiment; 39,302 completed bookings; straight-line distance"
+kmeans_reliability_k8_seed49,2026-10-24,Team 6,K-Means K=8; seed=49,mean_nearest_centre_km,1.485429,49,"10-seed reliability experiment; 39,302 completed bookings; straight-line distance"
+kmeans_reliability_k8_seed50,2026-10-24,Team 6,K-Means K=8; seed=50,mean_nearest_centre_km,1.485632,50,"10-seed reliability experiment; 39,302 completed bookings; straight-line distance"
+kmeans_reliability_k8_seed51,2026-10-24,Team 6,K-Means K=8; seed=51,mean_nearest_centre_km,1.485426,51,"10-seed reliability experiment; 39,302 completed bookings; straight-line distance"
+comparison_kmeans_sample6000_seed42,2026-10-24,Team 6,K-Means K=4,mean_nearest_centre_km,2.522124,42,Actual clusters=4; noise=0.00%; same 6000-booking sample; straight-line Haversine distance; DBSCAN represented by nearest booking to cluster mean
+comparison_dbscan_sample6000_seed42,2026-10-24,Team 6,"DBSCAN eps=0.8 km, min_samples=30",mean_nearest_centre_km,3.242396,42,Actual clusters=4; noise=5.15%; same 6000-booking sample; straight-line Haversine distance; DBSCAN represented by nearest booking to cluster mean
