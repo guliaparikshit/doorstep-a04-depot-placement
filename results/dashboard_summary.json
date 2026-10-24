@@ -1,0 +1,53 @@
+{
+  "source": "Doorstep cleaned completed-bookings dataset",
+  "description": "Aggregated dashboard information; individual booking records are not included.",
+  "original_bookings": 40660,
+  "cleaned_bookings": 39302,
+  "excluded_bookings": 1358,
+  "zones": 4,
+  "areas": 10,
+  "bookings_by_zone": {
+    "east": 2842,
+    "north": 21081,
+    "south": 6679,
+    "west": 8700
+  },
+  "bookings_by_area": {
+    "Cyber Hub": 6785,
+    "Golf Course Road": 5456,
+    "DLF Phase 3": 4574,
+    "Sohna Road": 4313,
+    "Udyog Vihar": 4266,
+    "Palam Vihar": 3470,
+    "Sector 56": 2842,
+    "Sector 14": 2670,
+    "New Gurgaon": 2560,
+    "Manesar": 2366
+  },
+  "bookings_by_month": {
+    "2024-01": 1160,
+    "2024-02": 1233,
+    "2024-03": 1477,
+    "2024-04": 1569,
+    "2024-05": 1737,
+    "2024-06": 1774,
+    "2024-07": 1557,
+    "2024-08": 1526,
+    "2024-09": 1537,
+    "2024-10": 1507,
+    "2024-11": 1397,
+    "2024-12": 1380,
+    "2025-01": 1456,
+    "2025-02": 1470,
+    "2025-03": 1786,
+    "2025-04": 1833,
+    "2025-05": 2247,
+    "2025-06": 2149,
+    "2025-07": 1799,
+    "2025-08": 1881,
+    "2025-09": 1808,
+    "2025-10": 1811,
+    "2025-11": 1592,
+    "2025-12": 1616
+  }
+}

@@ -15,6 +15,7 @@ Candidate depots remain provisional, and distances are straight-line estimates.
 from __future__ import annotations
 
 import html
+import json
 from pathlib import Path
 
 import numpy as np
@@ -249,6 +250,35 @@ def read_csv(path: Path) -> pd.DataFrame:
         return pd.DataFrame()
 
 
+@st.cache_data(show_spinner=False)
+def read_dashboard_summary(path: Path) -> dict:
+    """Load published aggregate counts when individual records are absent."""
+    if not path.is_file():
+        return {}
+    try:
+        with path.open(encoding="utf-8") as f:
+            summary = json.load(f)
+        if not isinstance(summary, dict):
+            return {}
+        return summary
+    except (OSError, ValueError, TypeError) as exc:
+        st.warning(f"Could not load dashboard summary: {exc}")
+        return {}
+
+
+def aggregate_counts(field: str) -> pd.Series:
+    """Use full local data or the published area/zone aggregates."""
+    if field in bookings.columns:
+        return bookings[field].value_counts()
+    key = "bookings_by_" + field
+    values = dashboard_summary.get(key, {})
+    if isinstance(values, dict) and values:
+        return pd.Series({str(k): int(v) for k, v in values.items()}, dtype=int).sort_values(ascending=False)
+    return pd.Series(dtype=int)
+
+
+dashboard_summary = read_dashboard_summary(RESULTS / "dashboard_summary.json")
+
 bookings = read_csv(CLEAN)
 raw = read_csv(RAW)
 depots = read_csv(RESULTS / "depots.csv")
@@ -259,10 +289,10 @@ reliability = read_csv(RESULTS / "kmeans_reliability_summary.csv")
 logs = read_csv(ROOT / "experiments.csv")
 
 # The audited TA2 total is documented; never invent model measurements.
-raw_count = len(raw) if not raw.empty else 40660
-clean_count = len(bookings) if not bookings.empty else None
-zones = bookings["zone"].nunique() if "zone" in bookings.columns else None
-areas = bookings["area"].nunique() if "area" in bookings.columns else None
+raw_count = (len(raw) if not raw.empty else dashboard_summary.get("original_bookings", 40660))
+clean_count = (len(bookings) if not bookings.empty else dashboard_summary.get("cleaned_bookings"))
+zones = (bookings["zone"].nunique() if "zone" in bookings.columns else dashboard_summary.get("zones"))
+areas = (bookings["area"].nunique() if "area" in bookings.columns else dashboard_summary.get("areas"))
 
 
 def number(value, suffix=""):
@@ -565,17 +595,17 @@ if page == PAGES[0]:
     with area_col:
         with st.container(border=True):
             panel_title("📊 Bookings by area", "Readable labels · Hover for exact booking counts")
-            if "area" in bookings.columns:
-                area_counts = bookings["area"].value_counts().head(10)
+            area_counts = aggregate_counts("area").head(10)
+            if not area_counts.empty:
                 horizontal_bars(area_counts.index, area_counts.values, height=455)
             else:
                 show_png("bookings_by_area.png")
     with zone_col:
         with st.container(border=True):
             panel_title("◉ Demand by zone", "Distribution of completed service bookings")
-            if "zone" in bookings.columns:
-                z = bookings["zone"].value_counts()
-                donut(z.index, z.values, f"{len(bookings):,}<br>bookings", height=455)
+            z = aggregate_counts("zone")
+            if not z.empty:
+                donut(z.index, z.values, f"{int(z.sum()):,}<br>bookings", height=455)
             else:
                 show_png("bookings_by_zone.png")
 
@@ -673,17 +703,19 @@ elif page == PAGES[2]:
     with lcol:
         with st.container(border=True):
             panel_title("Service areas ranked", "Completed booking counts by area")
-            if "area" in bookings:
-                v=bookings["area"].value_counts()
-                horizontal_bars(v.index[:10],v.values[:10],height=465)
-            else:show_png("bookings_by_area.png")
+            v = aggregate_counts("area")
+            if not v.empty:
+                horizontal_bars(v.index[:10], v.values[:10], height=465)
+            else:
+                show_png("bookings_by_area.png")
     with rcol:
         with st.container(border=True):
             panel_title("Demand split across zones")
-            if "zone" in bookings:
-                z=bookings["zone"].value_counts()
-                donut(z.index,z.values,f"{len(bookings):,}<br>bookings",height=465)
-            else:show_png("bookings_by_zone.png")
+            z = aggregate_counts("zone")
+            if not z.empty:
+                donut(z.index, z.values, f"{int(z.sum()):,}<br>bookings", height=465)
+            else:
+                show_png("bookings_by_zone.png")
     note("Map colours use completed booking coordinates. The five depot markers are provisional "
          "booking-coordinate anchors: road access, land permissions and operating costs remain unverified.",True)
 
