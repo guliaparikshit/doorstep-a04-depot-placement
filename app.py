@@ -982,11 +982,11 @@ elif page == PAGES[8]:
     lcol,rcol=st.columns(2,gap="large")
     with lcol:
         with st.container(border=True):
-            st.markdown("**Parikshit Gulia**  \nTeam Lead · Data and coordination")
+            st.markdown("**Parikshit Gulia**  \nProject Lead • Core ML Development, Dashboard & Deployment")
             st.markdown("**Mukul Punia**  \nData exploration and preprocessing")
     with rcol:
         with st.container(border=True):
-            st.markdown("**Siddharth Sehwag**  \nMachine learning and clustering")
+            st.markdown("**Siddharth Sehwag**  \nClustering Research & Model Evaluation Support")
             st.markdown("**Nishant Chouhary**  \nEvaluation and documentation")
     section_heading("Methods and scientific limitations")
     st.write("K-Means groups booking coordinates into a selected number of clusters. "
