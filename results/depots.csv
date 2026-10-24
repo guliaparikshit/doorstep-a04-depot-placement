@@ -1,0 +1,6 @@
+depot_id,lat,lng,assigned_bookings,mean_distance_km,p90_distance_km,site_status
+D1,28.4961,77.0909,15400,1.6144,2.7892,provisional_unverified
+D2,28.41498,77.01511,7002,2.983,4.496,provisional_unverified
+D3,28.35696,76.9369,2397,1.5726,2.6796,provisional_unverified
+D4,28.43547,77.09967,8433,1.8658,3.2472,provisional_unverified
+D5,28.49393,77.03438,6070,2.4386,3.8591,provisional_unverified

@@ -1,46 +1,123 @@
 # A4 → A1 Integration Guide
 
 ## Project
+**A4:** Geospatial Demand Clustering for Micro-Depot Placement  
+**Team:** Team 6  
+**Track:** A — Service as a Service  
+**Application:** DEPOTIQ
 
-A4 — Geospatial Demand Clustering for Micro-Depot Placement
+## 1. Purpose
 
-## Purpose
+Our A4 module analyses geographical Doorstep booking demand and recommends provisional micro-depot locations.
 
-Our A4 module recommends locations for micro-depots based on customer booking demand. These depot locations can be used by the A1 Route Planner when planning van routes.
+The A1 Route Planner can use these candidate locations as geographical inputs for route-planning experiments.
 
-## Input
+## 2. Input Dataset
 
-Our main input is `bookings.csv`, which contains booking locations using latitude (`lat`) and longitude (`lng`).
+The A4 module uses:
 
-## Expected Output
+- data/raw/bookings.csv
+- data/processed/clean_bookings.csv
 
-The A4 module will generate `results/depots.csv` containing recommended depot coordinates.
+We analysed 40,660 original bookings and retained 39,302 completed bookings for clustering.
 
-### Proposed CSV Format
+Original data is preserved without modification.
 
-| Column | Description |
-| --- | --- |
-| `lat` | Depot latitude in decimal degrees |
-| `lng` | Depot longitude in decimal degrees |
+## 3. Main Output
 
-Each row represents one recommended depot location.
+File: results/depots.csv
 
-## How A1 Will Use It
+Columns:
 
-1. A4 analyses geographical booking demand.
-2. A4 recommends suitable depot locations.
-3. A4 exports the locations to `results/depots.csv`.
-4. A1 reads these coordinates as possible depot locations for route planning.
+- depot_id: Candidate identifier
+- lat: Latitude in decimal degrees
+- lng: Longitude in decimal degrees
+- assigned_bookings: Number of bookings assigned to the nearest candidate
+- mean_distance_km: Average straight-line distance for assigned bookings
+- p90_distance_km: 90th-percentile straight-line distance
+- site_status: Verification status
 
-## Assumptions and Limitations
+## 4. A1 Handover Output
 
-- Coordinates use decimal degrees.
-- The number of depots will be selected after evaluating different options.
-- Clustering centres are initial candidates, not automatically verified road-accessible locations.
-- Practical accessibility must be checked before final recommendations.
-- Straight-line distances are not the same as actual road distances.
-- The final schema and integration tests must be confirmed with the A1 team.
+File: results/depots_for_a1.csv
 
-## Current Status
+Schema:
 
-This document describes the planned integration. The final depot CSV and A1 integration have not yet been implemented or tested.
+depot_id,lat,lng
+
+Coordinates use WGS84 decimal degrees.
+
+The current file contains five provisional candidate locations.
+
+This is a proposed handover schema. The A1 team must confirm that it matches their expected input format.
+
+## 5. How to Regenerate
+
+Install project dependencies:
+
+    python -m pip install -r requirements.txt
+
+Generate provisional depot candidates:
+
+    python src/depot_recommendations.py --k 5
+
+Export coordinates for A1:
+
+    python src/export_a1.py
+
+Launch the dashboard:
+
+    python -m streamlit run app.py
+
+## 6. Current Results
+
+Planning scenario: K=5
+
+- Completed bookings analysed: 39,302
+- Provisional candidates: 5
+- Mean nearest-candidate distance: 2.037 km
+- Median distance: 1.887 km
+- P90 distance: 3.592 km
+
+Distances are geographical straight-line estimates, not driving distances.
+
+K=5 is a planning scenario, not a proven economically optimal depot count.
+
+## 7. Integration Checks
+
+Completed in A4:
+
+- Candidate coordinate generation
+- Coordinate validation
+- Unique depot IDs
+- CSV export
+- Five-row handover file generated
+
+Pending with A1:
+
+- Confirm expected input column names
+- Confirm coordinate system and units
+- Test importing the handover CSV into the A1 Route Planner
+- Test route generation using exported candidate depots
+
+## 8. Important Limitations
+
+The candidate coordinates are selected using observed booking locations near K-Means centres.
+
+They are not verified physical depot properties.
+
+Before real deployment, the following must be checked:
+
+- Road accessibility
+- Legal permission and land suitability
+- Availability of water and supplies
+- Parking and loading space
+- Operating and rental costs
+
+The current solution is an academic geographical planning prototype, not a production routing or logistics system.
+
+## 9. Next Integration Milestone
+
+Share results/depots_for_a1.csv with the A1 team and perform a real import test.
+
+Document any schema changes, failed tests and integration outcomes before marking A1 integration complete.
